@@ -1,37 +1,84 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+
+import groups from '@functions/getGroups';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless-app',
   frameworkVersion: '2',
   custom: {
-    esbuild: {
-      bundle: true,
-      minify: false,
-      sourcemap: true,
-      exclude: ['aws-sdk'],
-      target: 'node14',
-      define: { 'require.resolve': undefined },
-      platform: 'node',
+    webpack: {
+      webpackConfig: './webpack.config.js',
+      includeModules: true,
     },
+    topicName: 'imagesTopic-${self:provider.stage}'
   },
-  plugins: ['serverless-esbuild'],
+  
+  plugins: ['serverless-webpack'],
+  package:{
+    individually: false,
+    include: ['src/**']
+  },
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
+    stage: 'dev',
+    region: 'us-east-2',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      GROUPS_TABLE: 'Groups-${self:provider.stage}',
+      SLS_DEBUG: '*',
     },
     lambdaHashingVersion: '20201221',
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: [
+          'dynamodb:Scan',
+        ],
+        Resource: [
+          {"Fn::GetAtt": [ 'GroupsDynamoDBTable', 'Arn' ]}
+        ]
+      },
+    ]
   },
   // import the function via paths
-  functions: { hello },
+  functions: { groups },
+  resources:{
+    Resources: {
+      GatewayResponseDefault4xx: {
+        Type: 'AWS::ApiGateway::GatewayResponse',
+        Properties: {
+            ResponseParameters: {
+              "gatewayresponse.header.Access-Control-Allow-Origin":"'*'",
+              "gatewayresponse.header.Access-Control-Allow-Headers":"'*'",
+              "gatewayresponse.header.Access-Control-Allow-Methods":"'GET,OPTIONS,POST'"
+            },
+            ResponseType: "DEFAULT_4XX",
+            RestApiId: {
+              Ref: 'ApiGatewayRestApi'
+            }
+        }
+      },
+      GroupsDynamoDBTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+            TableName: '${self:provider.environment.GROUPS_TABLE}',
+            AttributeDefinitions: [
+                { AttributeName: 'id', AttributeType: 'S' }
+            ],
+            KeySchema: [
+                { AttributeName: 'id', KeyType: 'HASH' }
+            ],
+            BillingMode: 'PAY_PER_REQUEST'
+        }
+      },
+    }
+  }
 };
 
 module.exports = serverlessConfiguration;
