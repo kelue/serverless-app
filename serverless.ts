@@ -1,7 +1,8 @@
 import type { AWS } from '@serverless/typescript';
-
+//import auth0Authorizer from '@functions/auth0Authorizer';
 
 import groups from '@functions/getGroups';
+import creategroup from '@functions/createGroup';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless-app',
@@ -31,7 +32,6 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       GROUPS_TABLE: 'Groups-${self:provider.stage}',
-      SLS_DEBUG: '*',
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
@@ -39,6 +39,7 @@ const serverlessConfiguration: AWS = {
         Effect: 'Allow',
         Action: [
           'dynamodb:Scan',
+          'dynamodb:PutItem'
         ],
         Resource: [
           {"Fn::GetAtt": [ 'GroupsDynamoDBTable', 'Arn' ]}
@@ -47,7 +48,7 @@ const serverlessConfiguration: AWS = {
     ]
   },
   // import the function via paths
-  functions: { groups },
+  functions: { groups, creategroup },
   resources:{
     Resources: {
       GatewayResponseDefault4xx: {

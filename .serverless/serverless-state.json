@@ -15,15 +15,15 @@
       },
       "environment": {
         "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
-        "GROUPS_TABLE": "Groups-dev",
-        "SLS_DEBUG": "*"
+        "GROUPS_TABLE": "Groups-dev"
       },
       "lambdaHashingVersion": "20201221",
       "iamRoleStatements": [
         {
           "Effect": "Allow",
           "Action": [
-            "dynamodb:Scan"
+            "dynamodb:Scan",
+            "dynamodb:PutItem"
           ],
           "Resource": [
             {
@@ -115,6 +115,12 @@
               "LogGroupName": "/aws/lambda/serverless-app-dev-groups"
             }
           },
+          "CreategroupLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/serverless-app-dev-creategroup"
+            }
+          },
           "IamRoleLambdaExecution": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -202,7 +208,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-app/dev/1634700018049-2021-10-20T03:20:18.049Z/serverless-app.zip"
+                "S3Key": "serverless/serverless-app/dev/1634741550344-2021-10-20T14:52:30.344Z/serverless-app.zip"
               },
               "Handler": "src/functions/getGroups/handler.main",
               "Runtime": "nodejs14.x",
@@ -212,8 +218,7 @@
               "Environment": {
                 "Variables": {
                   "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
-                  "GROUPS_TABLE": "Groups-dev",
-                  "SLS_DEBUG": "*"
+                  "GROUPS_TABLE": "Groups-dev"
                 }
               },
               "Role": {
@@ -227,14 +232,55 @@
               "GroupsLogGroup"
             ]
           },
-          "GroupsLambdaVersionXdNWMa5sn3kev4KZSlkAyKF1rDmTmuCrMMpgjNAo": {
+          "CreategroupLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/serverless-app/dev/1634741550344-2021-10-20T14:52:30.344Z/serverless-app.zip"
+              },
+              "Handler": "src/functions/createGroup/handler.main",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "serverless-app-dev-creategroup",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+                  "GROUPS_TABLE": "Groups-dev"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "CreategroupLogGroup"
+            ]
+          },
+          "GroupsLambdaVersionv5CcWDSpdCCQx2KqHZGOMLTIBYcjepIgjwQ5ce8ts": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GroupsLambdaFunction"
               },
-              "CodeSha256": "um0KImIOM0qgwU4bQHL1ANDrP9EIBOiHBtuLh6f8u6U="
+              "CodeSha256": "/84FTfB/7ZN9PU7kJJRwvWP/lubDaY3fvmEQo5Hscbc="
+            }
+          },
+          "CreategroupLambdaVersiondHF5g2wihGirr2dJg6kRYwSXZXUq5gQ0Xuo6IGG8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "CreategroupLambdaFunction"
+              },
+              "CodeSha256": "/84FTfB/7ZN9PU7kJJRwvWP/lubDaY3fvmEQo5Hscbc="
             }
           },
           "ApiGatewayRestApi": {
@@ -294,7 +340,7 @@
                     "ResponseParameters": {
                       "method.response.header.Access-Control-Allow-Origin": "'*'",
                       "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST,GET'"
                     },
                     "ResponseTemplates": {
                       "application/json": ""
@@ -356,7 +402,97 @@
               "GroupsLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1634700000888": {
+          "ApiGatewayMethodGroupsPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceGroups"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "CreategroupLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": [],
+              "RequestValidatorId": {
+                "Ref": "ApiGatewayServerlessappRequestValidator"
+              },
+              "RequestModels": {
+                "application/json": {
+                  "Ref": "ApiGatewayMethodGroupsPostApplicationJsonModel"
+                }
+              }
+            },
+            "DependsOn": [
+              "CreategroupLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayServerlessappRequestValidator": {
+            "Type": "AWS::ApiGateway::RequestValidator",
+            "Properties": {
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ValidateRequestBody": true,
+              "ValidateRequestParameters": true,
+              "Name": "serverless-app-dev | Validate request body and querystring parameters"
+            }
+          },
+          "ApiGatewayMethodGroupsPostApplicationJsonModel": {
+            "Type": "AWS::ApiGateway::Model",
+            "Properties": {
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ContentType": "application/json",
+              "Schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "description"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "ApiGatewayDeployment1634741532630": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -366,7 +502,8 @@
             },
             "DependsOn": [
               "ApiGatewayMethodGroupsOptions",
-              "ApiGatewayMethodGroupsGet"
+              "ApiGatewayMethodGroupsGet",
+              "ApiGatewayMethodGroupsPost"
             ]
           },
           "GroupsLambdaPermissionApiGateway": {
@@ -375,6 +512,43 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "GroupsLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "CreategroupLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "CreategroupLambdaFunction",
                   "Arn"
                 ]
               },
@@ -452,10 +626,19 @@
           "GroupsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GroupsLambdaVersionXdNWMa5sn3kev4KZSlkAyKF1rDmTmuCrMMpgjNAo"
+              "Ref": "GroupsLambdaVersionv5CcWDSpdCCQx2KqHZGOMLTIBYcjepIgjwQ5ce8ts"
             },
             "Export": {
               "Name": "sls-serverless-app-dev-GroupsLambdaFunctionQualifiedArn"
+            }
+          },
+          "CreategroupLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "CreategroupLambdaVersiondHF5g2wihGirr2dJg6kRYwSXZXUq5gQ0Xuo6IGG8"
+            },
+            "Export": {
+              "Name": "sls-serverless-app-dev-CreategroupLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -617,7 +800,51 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "GroupsLambdaVersionXdNWMa5sn3kev4KZSlkAyKF1rDmTmuCrMMpgjNAo"
+        "versionLogicalId": "GroupsLambdaVersionv5CcWDSpdCCQx2KqHZGOMLTIBYcjepIgjwQ5ce8ts"
+      },
+      "creategroup": {
+        "handler": "src/functions/createGroup/handler.main",
+        "events": [
+          {
+            "http": {
+              "method": "post",
+              "path": "groups",
+              "cors": {
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "schemas": {
+                  "application/json": {
+                    "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ApiGatewayMethodGroupsPostApplicationJsonModel\"][\"Properties\"][\"Schema\"]"
+                  }
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "serverless-app-dev-creategroup",
+        "package": {
+          "artifact": ".serverless/serverless-app.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "CreategroupLambdaVersiondHF5g2wihGirr2dJg6kRYwSXZXUq5gQ0Xuo6IGG8"
       }
     },
     "resources": {
@@ -676,7 +903,7 @@
         "include": [
           "src/**"
         ],
-        "artifactDirectoryName": "serverless/serverless-app/dev/1634700018049-2021-10-20T03:20:18.049Z"
+        "artifactDirectoryName": "serverless/serverless-app/dev/1634741550344-2021-10-20T14:52:30.344Z"
       },
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
@@ -693,7 +920,7 @@
   },
   "package": {
     "individually": false,
-    "artifactDirectoryName": "serverless/serverless-app/dev/1634700018049-2021-10-20T03:20:18.049Z",
+    "artifactDirectoryName": "serverless/serverless-app/dev/1634741550344-2021-10-20T14:52:30.344Z",
     "artifact": ""
   }
 }
