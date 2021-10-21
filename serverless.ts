@@ -1,8 +1,10 @@
+import auth0Authorizer from '@functions/auth0Authorizer';
 import type { AWS } from '@serverless/typescript';
-//import auth0Authorizer from '@functions/auth0Authorizer';
+
 
 import groups from '@functions/getGroups';
 import creategroup from '@functions/createGroup';
+import getImages from '@functions/getImages';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless-app',
@@ -32,6 +34,7 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       GROUPS_TABLE: 'Groups-${self:provider.stage}',
+      IMAGES_TABLE: 'Image-${self:provider.stage}',
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
@@ -39,16 +42,26 @@ const serverlessConfiguration: AWS = {
         Effect: 'Allow',
         Action: [
           'dynamodb:Scan',
-          'dynamodb:PutItem'
+          'dynamodb:PutItem',
+          'dynamodb:GetItem',
         ],
         Resource: [
           {"Fn::GetAtt": [ 'GroupsDynamoDBTable', 'Arn' ]}
         ]
       },
+      {
+        Effect: 'Allow',
+        Action: [
+          'dynamodb:Query',
+        ],
+        Resource: [
+          {"Fn::GetAtt": [ 'ImagesDynamoDBTable', 'Arn' ]}
+        ]
+      },
     ]
   },
   // import the function via paths
-  functions: { groups, creategroup },
+  functions: { groups, creategroup, auth0Authorizer, getImages },
   resources:{
     Resources: {
       GatewayResponseDefault4xx: {
@@ -68,14 +81,30 @@ const serverlessConfiguration: AWS = {
       GroupsDynamoDBTable: {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
-            TableName: '${self:provider.environment.GROUPS_TABLE}',
-            AttributeDefinitions: [
-                { AttributeName: 'id', AttributeType: 'S' }
-            ],
-            KeySchema: [
-                { AttributeName: 'id', KeyType: 'HASH' }
-            ],
-            BillingMode: 'PAY_PER_REQUEST'
+          TableName: '${self:provider.environment.GROUPS_TABLE}',
+          AttributeDefinitions: [
+              { AttributeName: 'id', AttributeType: 'S' }
+          ],
+          KeySchema: [
+              { AttributeName: 'id', KeyType: 'HASH' }
+          ],
+          BillingMode: 'PAY_PER_REQUEST'
+        }
+      },
+      ImagesDynamoDBTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: '${self:provider.environment.IMAGES_TABLE}',
+          AttributeDefinitions: [
+              { AttributeName: 'groupId', AttributeType: 'S' },
+              { AttributeName: 'timestamp', AttributeType: 'S' },
+              // { AttributeName: 'imageId', AttributeType: 'S' }
+          ],
+          KeySchema: [
+              { AttributeName: 'groupId', KeyType: 'HASH' },
+              { AttributeName: 'timestamp', KeyType: 'RANGE' }
+          ],
+          BillingMode: 'PAY_PER_REQUEST'
         }
       },
     }
