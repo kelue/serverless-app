@@ -6,7 +6,7 @@ import * as AWS from 'aws-sdk'
 const docClient = new AWS.DynamoDB.DocumentClient()
 const groupsTable = process.env.GROUPS_TABLE
 
-const groups = async (event) => {
+const groups = async () => {
 
   const result = await docClient.scan({
     TableName: groupsTable
