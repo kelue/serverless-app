@@ -7,7 +7,7 @@ export default {
     {
       http: {
         method: 'post',
-        path: 'groups',
+        path: 'groups/{groupId}/images',
         cors: true,
         authorizer: {name: 'auth0Authorizer'},
         request: {
