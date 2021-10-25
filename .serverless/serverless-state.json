@@ -17,7 +17,10 @@
         "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
         "GROUPS_TABLE": "Groups-dev",
         "IMAGES_TABLE": "Image-dev",
-        "IMAGE_ID_INDEX": "ImageIdIndex"
+        "IMAGE_ID_INDEX": "ImageIdIndex",
+        "AUTH_0_SECRET_ID": "Auth0Secret-dev",
+        "AUTH_0_SECRET_FIELD": "auth0Secret",
+        "IMAGES_S3_BUCKET": "serverless-udagram-images-kelue-dev"
       },
       "lambdaHashingVersion": "20201221",
       "iamRoleStatements": [
@@ -263,7 +266,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z/serverless-app.zip"
+                "S3Key": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z/serverless-app.zip"
               },
               "Handler": "src/functions/getGroups/handler.main",
               "Runtime": "nodejs14.x",
@@ -275,7 +278,10 @@
                   "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
                   "GROUPS_TABLE": "Groups-dev",
                   "IMAGES_TABLE": "Image-dev",
-                  "IMAGE_ID_INDEX": "ImageIdIndex"
+                  "IMAGE_ID_INDEX": "ImageIdIndex",
+                  "AUTH_0_SECRET_ID": "Auth0Secret-dev",
+                  "AUTH_0_SECRET_FIELD": "auth0Secret",
+                  "IMAGES_S3_BUCKET": "serverless-udagram-images-kelue-dev"
                 }
               },
               "Role": {
@@ -296,7 +302,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z/serverless-app.zip"
+                "S3Key": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z/serverless-app.zip"
               },
               "Handler": "src/functions/createGroup/handler.main",
               "Runtime": "nodejs14.x",
@@ -308,7 +314,10 @@
                   "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
                   "GROUPS_TABLE": "Groups-dev",
                   "IMAGES_TABLE": "Image-dev",
-                  "IMAGE_ID_INDEX": "ImageIdIndex"
+                  "IMAGE_ID_INDEX": "ImageIdIndex",
+                  "AUTH_0_SECRET_ID": "Auth0Secret-dev",
+                  "AUTH_0_SECRET_FIELD": "auth0Secret",
+                  "IMAGES_S3_BUCKET": "serverless-udagram-images-kelue-dev"
                 }
               },
               "Role": {
@@ -329,7 +338,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z/serverless-app.zip"
+                "S3Key": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z/serverless-app.zip"
               },
               "Handler": "src/functions/auth0Authorizer/handler.main",
               "Runtime": "nodejs14.x",
@@ -341,7 +350,10 @@
                   "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
                   "GROUPS_TABLE": "Groups-dev",
                   "IMAGES_TABLE": "Image-dev",
-                  "IMAGE_ID_INDEX": "ImageIdIndex"
+                  "IMAGE_ID_INDEX": "ImageIdIndex",
+                  "AUTH_0_SECRET_ID": "Auth0Secret-dev",
+                  "AUTH_0_SECRET_FIELD": "auth0Secret",
+                  "IMAGES_S3_BUCKET": "serverless-udagram-images-kelue-dev"
                 }
               },
               "Role": {
@@ -362,7 +374,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z/serverless-app.zip"
+                "S3Key": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z/serverless-app.zip"
               },
               "Handler": "src/functions/getImages/handler.main",
               "Runtime": "nodejs14.x",
@@ -374,7 +386,10 @@
                   "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
                   "GROUPS_TABLE": "Groups-dev",
                   "IMAGES_TABLE": "Image-dev",
-                  "IMAGE_ID_INDEX": "ImageIdIndex"
+                  "IMAGE_ID_INDEX": "ImageIdIndex",
+                  "AUTH_0_SECRET_ID": "Auth0Secret-dev",
+                  "AUTH_0_SECRET_FIELD": "auth0Secret",
+                  "IMAGES_S3_BUCKET": "serverless-udagram-images-kelue-dev"
                 }
               },
               "Role": {
@@ -395,7 +410,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z/serverless-app.zip"
+                "S3Key": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z/serverless-app.zip"
               },
               "Handler": "src/functions/getImage/handler.main",
               "Runtime": "nodejs14.x",
@@ -407,7 +422,10 @@
                   "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
                   "GROUPS_TABLE": "Groups-dev",
                   "IMAGES_TABLE": "Image-dev",
-                  "IMAGE_ID_INDEX": "ImageIdIndex"
+                  "IMAGE_ID_INDEX": "ImageIdIndex",
+                  "AUTH_0_SECRET_ID": "Auth0Secret-dev",
+                  "AUTH_0_SECRET_FIELD": "auth0Secret",
+                  "IMAGES_S3_BUCKET": "serverless-udagram-images-kelue-dev"
                 }
               },
               "Role": {
@@ -428,7 +446,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z/serverless-app.zip"
+                "S3Key": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z/serverless-app.zip"
               },
               "Handler": "src/functions/createImage/handler.main",
               "Runtime": "nodejs14.x",
@@ -440,7 +458,10 @@
                   "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
                   "GROUPS_TABLE": "Groups-dev",
                   "IMAGES_TABLE": "Image-dev",
-                  "IMAGE_ID_INDEX": "ImageIdIndex"
+                  "IMAGE_ID_INDEX": "ImageIdIndex",
+                  "AUTH_0_SECRET_ID": "Auth0Secret-dev",
+                  "AUTH_0_SECRET_FIELD": "auth0Secret",
+                  "IMAGES_S3_BUCKET": "serverless-udagram-images-kelue-dev"
                 }
               },
               "Role": {
@@ -454,64 +475,64 @@
               "CreateimageLogGroup"
             ]
           },
-          "GroupsLambdaVersionkpa2L1lkpzzhQfDheBIHKxiLIodxZhZBeU3yGTXE3E": {
+          "GroupsLambdaVersioneRJyyyR9Mu2NbZ0hs8YZVYAgMNeYpeaIbtzztFVvs": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GroupsLambdaFunction"
               },
-              "CodeSha256": "Yb8+e00Yu4U1C+k30nvmv2W7mp0stepjmR0tWBJdGtw="
+              "CodeSha256": "B/O4A8EaCa7wWkDe7R9W2ivp49xRpqVGWYmT6tUTmLw="
             }
           },
-          "CreategroupLambdaVersionMFYSzIN0edXg2ceVYHv9K2AzQuX7cGIWKSgRwz3BY": {
+          "CreategroupLambdaVersionKwweo4ltuqtNY3RtMC0l4W91UQUyrlJNjIJgNM9l0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreategroupLambdaFunction"
               },
-              "CodeSha256": "Yb8+e00Yu4U1C+k30nvmv2W7mp0stepjmR0tWBJdGtw="
+              "CodeSha256": "B/O4A8EaCa7wWkDe7R9W2ivp49xRpqVGWYmT6tUTmLw="
             }
           },
-          "Auth0AuthorizerLambdaVersionZnUOuFQFoeRvx7RzMzu4XSZx5MbvTADFcOlavyG0": {
+          "Auth0AuthorizerLambdaVersion3Q9pAed1Vl8kBOvq1Q8GBp21ZZae3n5nRet9ysvA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "Auth0AuthorizerLambdaFunction"
               },
-              "CodeSha256": "Yb8+e00Yu4U1C+k30nvmv2W7mp0stepjmR0tWBJdGtw="
+              "CodeSha256": "B/O4A8EaCa7wWkDe7R9W2ivp49xRpqVGWYmT6tUTmLw="
             }
           },
-          "GetImagesLambdaVersionZe44VV1nAwJcvaL4MNGxT3VJqSJYcPF4O4In1BEeU": {
+          "GetImagesLambdaVersiond9Xo3C6R5JhSodRoLWgbcuYvVbfyQR08WU4z8xVg0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetImagesLambdaFunction"
               },
-              "CodeSha256": "Yb8+e00Yu4U1C+k30nvmv2W7mp0stepjmR0tWBJdGtw="
+              "CodeSha256": "B/O4A8EaCa7wWkDe7R9W2ivp49xRpqVGWYmT6tUTmLw="
             }
           },
-          "GetimageLambdaVersionzCb5HauHqXxb3g8MOhaxzRfzOacidB11WvFi8gWPlCE": {
+          "GetimageLambdaVersionO6CicUmUNMaVWIXbbnhAiwvv6WW9XSTVGQ5MKWWEe5Y": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetimageLambdaFunction"
               },
-              "CodeSha256": "Yb8+e00Yu4U1C+k30nvmv2W7mp0stepjmR0tWBJdGtw="
+              "CodeSha256": "B/O4A8EaCa7wWkDe7R9W2ivp49xRpqVGWYmT6tUTmLw="
             }
           },
-          "CreateimageLambdaVersionfAAHe04br2phM9DHoQztUUFIEymPauK1w1QdlEDoA": {
+          "CreateimageLambdaVersionIMJGTKSuG3YCMrBMvcSO02o67OzX2BFUcofUY9VY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "CreateimageLambdaFunction"
               },
-              "CodeSha256": "Yb8+e00Yu4U1C+k30nvmv2W7mp0stepjmR0tWBJdGtw="
+              "CodeSha256": "B/O4A8EaCa7wWkDe7R9W2ivp49xRpqVGWYmT6tUTmLw="
             }
           },
           "ApiGatewayRestApi": {
@@ -1068,7 +1089,7 @@
               "Type": "TOKEN"
             }
           },
-          "ApiGatewayDeployment1634914197016": {
+          "ApiGatewayDeployment1635163669588": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1389,6 +1410,51 @@
                 "StreamViewType": "NEW_IMAGE"
               }
             }
+          },
+          "AttachmentsBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketName": "serverless-udagram-images-kelue-dev",
+              "CorsConfiguration": {
+                "CorsRules": [
+                  {
+                    "AllowedOrigins": [
+                      "*"
+                    ],
+                    "AllowedHeaders": [
+                      "*"
+                    ],
+                    "AllowedMethods": [
+                      "GET",
+                      "PUT",
+                      "POST",
+                      "DELETE",
+                      "HEAD"
+                    ],
+                    "MaxAge": 3000
+                  }
+                ]
+              }
+            }
+          },
+          "BucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "PolicyDocument": {
+                "Id": "MyPolicy",
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Sid": "PublicReadForGetBucketObjects",
+                    "Effect": "Allow",
+                    "Principal": "*",
+                    "Action": "s3:GetObject",
+                    "Resource": "arn:aws:s3:::serverless-udagram-images-kelue-dev/*"
+                  }
+                ]
+              },
+              "Bucket": "serverless-udagram-images-kelue-dev"
+            }
           }
         },
         "Outputs": {
@@ -1403,7 +1469,7 @@
           "GroupsLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GroupsLambdaVersionkpa2L1lkpzzhQfDheBIHKxiLIodxZhZBeU3yGTXE3E"
+              "Ref": "GroupsLambdaVersioneRJyyyR9Mu2NbZ0hs8YZVYAgMNeYpeaIbtzztFVvs"
             },
             "Export": {
               "Name": "sls-serverless-app-dev-GroupsLambdaFunctionQualifiedArn"
@@ -1412,7 +1478,7 @@
           "CreategroupLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreategroupLambdaVersionMFYSzIN0edXg2ceVYHv9K2AzQuX7cGIWKSgRwz3BY"
+              "Ref": "CreategroupLambdaVersionKwweo4ltuqtNY3RtMC0l4W91UQUyrlJNjIJgNM9l0"
             },
             "Export": {
               "Name": "sls-serverless-app-dev-CreategroupLambdaFunctionQualifiedArn"
@@ -1421,7 +1487,7 @@
           "Auth0AuthorizerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "Auth0AuthorizerLambdaVersionZnUOuFQFoeRvx7RzMzu4XSZx5MbvTADFcOlavyG0"
+              "Ref": "Auth0AuthorizerLambdaVersion3Q9pAed1Vl8kBOvq1Q8GBp21ZZae3n5nRet9ysvA"
             },
             "Export": {
               "Name": "sls-serverless-app-dev-Auth0AuthorizerLambdaFunctionQualifiedArn"
@@ -1430,7 +1496,7 @@
           "GetImagesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetImagesLambdaVersionZe44VV1nAwJcvaL4MNGxT3VJqSJYcPF4O4In1BEeU"
+              "Ref": "GetImagesLambdaVersiond9Xo3C6R5JhSodRoLWgbcuYvVbfyQR08WU4z8xVg0"
             },
             "Export": {
               "Name": "sls-serverless-app-dev-GetImagesLambdaFunctionQualifiedArn"
@@ -1439,7 +1505,7 @@
           "GetimageLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetimageLambdaVersionzCb5HauHqXxb3g8MOhaxzRfzOacidB11WvFi8gWPlCE"
+              "Ref": "GetimageLambdaVersionO6CicUmUNMaVWIXbbnhAiwvv6WW9XSTVGQ5MKWWEe5Y"
             },
             "Export": {
               "Name": "sls-serverless-app-dev-GetimageLambdaFunctionQualifiedArn"
@@ -1448,7 +1514,7 @@
           "CreateimageLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "CreateimageLambdaVersionfAAHe04br2phM9DHoQztUUFIEymPauK1w1QdlEDoA"
+              "Ref": "CreateimageLambdaVersionIMJGTKSuG3YCMrBMvcSO02o67OzX2BFUcofUY9VY"
             },
             "Export": {
               "Name": "sls-serverless-app-dev-CreateimageLambdaFunctionQualifiedArn"
@@ -1613,7 +1679,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "GroupsLambdaVersionkpa2L1lkpzzhQfDheBIHKxiLIodxZhZBeU3yGTXE3E"
+        "versionLogicalId": "GroupsLambdaVersioneRJyyyR9Mu2NbZ0hs8YZVYAgMNeYpeaIbtzztFVvs"
       },
       "creategroup": {
         "handler": "src/functions/createGroup/handler.main",
@@ -1667,7 +1733,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "CreategroupLambdaVersionMFYSzIN0edXg2ceVYHv9K2AzQuX7cGIWKSgRwz3BY"
+        "versionLogicalId": "CreategroupLambdaVersionKwweo4ltuqtNY3RtMC0l4W91UQUyrlJNjIJgNM9l0"
       },
       "auth0Authorizer": {
         "handler": "src/functions/auth0Authorizer/handler.main",
@@ -1680,7 +1746,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "Auth0AuthorizerLambdaVersionZnUOuFQFoeRvx7RzMzu4XSZx5MbvTADFcOlavyG0"
+        "versionLogicalId": "Auth0AuthorizerLambdaVersion3Q9pAed1Vl8kBOvq1Q8GBp21ZZae3n5nRet9ysvA"
       },
       "getImages": {
         "handler": "src/functions/getImages/handler.main",
@@ -1717,7 +1783,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "GetImagesLambdaVersionZe44VV1nAwJcvaL4MNGxT3VJqSJYcPF4O4In1BEeU"
+        "versionLogicalId": "GetImagesLambdaVersiond9Xo3C6R5JhSodRoLWgbcuYvVbfyQR08WU4z8xVg0"
       },
       "getimage": {
         "handler": "src/functions/getImage/handler.main",
@@ -1754,7 +1820,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "GetimageLambdaVersionzCb5HauHqXxb3g8MOhaxzRfzOacidB11WvFi8gWPlCE"
+        "versionLogicalId": "GetimageLambdaVersionO6CicUmUNMaVWIXbbnhAiwvv6WW9XSTVGQ5MKWWEe5Y"
       },
       "createimage": {
         "handler": "src/functions/createImage/handler.main",
@@ -1808,7 +1874,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "CreateimageLambdaVersionfAAHe04br2phM9DHoQztUUFIEymPauK1w1QdlEDoA"
+        "versionLogicalId": "CreateimageLambdaVersionIMJGTKSuG3YCMrBMvcSO02o67OzX2BFUcofUY9VY"
       }
     },
     "resources": {
@@ -1893,6 +1959,51 @@
               "StreamViewType": "NEW_IMAGE"
             }
           }
+        },
+        "AttachmentsBucket": {
+          "Type": "AWS::S3::Bucket",
+          "Properties": {
+            "BucketName": "serverless-udagram-images-kelue-dev",
+            "CorsConfiguration": {
+              "CorsRules": [
+                {
+                  "AllowedOrigins": [
+                    "*"
+                  ],
+                  "AllowedHeaders": [
+                    "*"
+                  ],
+                  "AllowedMethods": [
+                    "GET",
+                    "PUT",
+                    "POST",
+                    "DELETE",
+                    "HEAD"
+                  ],
+                  "MaxAge": 3000
+                }
+              ]
+            }
+          }
+        },
+        "BucketPolicy": {
+          "Type": "AWS::S3::BucketPolicy",
+          "Properties": {
+            "PolicyDocument": {
+              "Id": "MyPolicy",
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Sid": "PublicReadForGetBucketObjects",
+                  "Effect": "Allow",
+                  "Principal": "*",
+                  "Action": "s3:GetObject",
+                  "Resource": "arn:aws:s3:::serverless-udagram-images-kelue-dev/*"
+                }
+              ]
+            },
+            "Bucket": "serverless-udagram-images-kelue-dev"
+          }
         }
       },
       "Outputs": {}
@@ -1915,7 +2026,7 @@
         "include": [
           "src/**"
         ],
-        "artifactDirectoryName": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z"
+        "artifactDirectoryName": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z"
       },
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
@@ -1932,7 +2043,7 @@
   },
   "package": {
     "individually": false,
-    "artifactDirectoryName": "serverless/serverless-app/dev/1634914273909-2021-10-22T14:51:13.909Z",
+    "artifactDirectoryName": "serverless/serverless-app/dev/1635163690496-2021-10-25T12:08:10.496Z",
     "artifact": ""
   }
 }
