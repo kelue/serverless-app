@@ -1,4 +1,4 @@
-import auth0Authorizer from '@functions/auth0Authorizer';
+//import auth0Authorizer from '@functions/auth0Authorizer';
 import type { AWS } from '@serverless/typescript';
 
 
@@ -38,8 +38,8 @@ const serverlessConfiguration: AWS = {
       GROUPS_TABLE: 'Groups-${self:provider.stage}',
       IMAGES_TABLE: 'Image-${self:provider.stage}',
       IMAGE_ID_INDEX: 'ImageIdIndex',
-      AUTH_0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
-      AUTH_0_SECRET_FIELD: 'auth0Secret',
+      //AUTH_0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
+      //AUTH_0_SECRET_FIELD: 'auth0Secret',
       IMAGES_S3_BUCKET: 'serverless-udagram-images-kelue-${self:provider.stage}',
       SIGNED_URL_EXPIRATION: '300',
     },
@@ -73,10 +73,18 @@ const serverlessConfiguration: AWS = {
         ],
         Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.IMAGES_TABLE}/index/${self:provider.environment.IMAGE_ID_INDEX}'
       },
+      {
+        Effect: 'Allow',
+        Action: [
+          's3:PutObject',
+          's3:GetObject'
+        ],
+        Resource: 'arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*'
+      },
     ]
   },
   // import the function via paths
-  functions: { groups, creategroup, auth0Authorizer, getImages, getimage, createimage },
+  functions: { groups, creategroup, getImages, getimage, createimage },
   resources:{
     Resources: {
       GatewayResponseDefault4xx: {
