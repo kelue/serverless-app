@@ -38,6 +38,10 @@ const serverlessConfiguration: AWS = {
       GROUPS_TABLE: 'Groups-${self:provider.stage}',
       IMAGES_TABLE: 'Image-${self:provider.stage}',
       IMAGE_ID_INDEX: 'ImageIdIndex',
+      AUTH_0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
+      AUTH_0_SECRET_FIELD: 'auth0Secret',
+      IMAGES_S3_BUCKET: 'serverless-udagram-images-kelue-${self:provider.stage}',
+      SIGNED_URL_EXPIRATION: '300',
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
@@ -130,6 +134,41 @@ const serverlessConfiguration: AWS = {
           StreamSpecification: {
             StreamViewType: 'NEW_IMAGE'
           }
+        }
+      },
+      AttachmentsBucket: {
+        Type: 'AWS::S3::Bucket',
+        Properties: {
+          BucketName: '${self:provider.environment.IMAGES_S3_BUCKET}',
+          CorsConfiguration:{
+            CorsRules: [
+              {
+                AllowedOrigins: ['*'],
+                AllowedHeaders: ['*'],
+                AllowedMethods: ['GET', 'PUT', 'POST', 'DELETE', 'HEAD'],
+                MaxAge: 3000,
+              },
+            ],
+          }
+        }
+      },
+      BucketPolicy: {
+        Type: 'AWS::S3::BucketPolicy',
+        Properties: {
+          PolicyDocument:{
+            Id: 'MyPolicy',
+            Version: '2012-10-17',
+            Statement: [
+              {
+                Sid: 'PublicReadForGetBucketObjects',
+                Effect: 'Allow',
+                Principal: '*',
+                Action: 's3:GetObject',
+                Resource: 'arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*'
+              }
+            ]
+          },
+          Bucket: '${self:provider.environment.IMAGES_S3_BUCKET}'
         }
       },
     }
