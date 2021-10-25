@@ -11,7 +11,8 @@ const createGroup = async (event) => {
 
   const itemId = uuid.v4()
 
-  const parsedBody = JSON.parse(event.body)
+  const parseEvent = JSON.stringify(event.body)
+  const parsedBody = JSON.parse(parseEvent)
 
   const newItem = {
     id: itemId,
