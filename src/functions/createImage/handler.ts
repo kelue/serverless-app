@@ -13,7 +13,7 @@ const s3 = new AWS.S3({
 const groupsTable = process.env.GROUPS_TABLE
 const imagesTable = process.env.IMAGES_TABLE
 const bucketName = process.env.IMAGES_S3_BUCKET
-const urlExpiration = process.env.SIGNED_URL_EXPIRATION
+const urlExpiration = parseInt(process.env.SIGNED_URL_EXPIRATION)
 
 const createImage = async (event) => {
     console.log('caller event ', event)
@@ -65,8 +65,7 @@ async function groupExists(groupId: string){
 
 async function Imagecreate(groupId: string, imageId: string, event: any) {
     const timestamp = new Date().toISOString()
-    const parseEvent = JSON.stringify(event.body)
-    const newImage = JSON.parse(parseEvent)
+    const newImage = event.body
 
     const newItem = {
         groupId,
@@ -79,8 +78,10 @@ async function Imagecreate(groupId: string, imageId: string, event: any) {
 
     await docClient.put({
         TableName: imagesTable,
-        Item: newItem,
-    })
+        Item: newItem
+    }).promise()
+
+    console.log('put into table :', newItem)
     return newItem
 }
 
