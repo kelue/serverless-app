@@ -2,8 +2,9 @@ import 'source-map-support/register';
 
 import { middyfy } from '@libs/lambda';
 import { SNSHandler, S3Event, SNSEvent } from 'aws-lambda';
-import * as AWS from 'aws-sdk';
-import * as Jimp from 'jimp';
+import * as AWS from 'aws-sdk'
+
+import * as Jimp from 'jimp'
 
 
 

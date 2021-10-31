@@ -31,7 +31,7 @@ const serverlessConfiguration: AWS = {
   },
   provider: {
     name: 'aws',
-    runtime: 'nodejs14.x',
+    runtime: 'nodejs12.x',
     stage: 'dev',
     region: 'us-east-2',
     apiGateway: {
@@ -46,7 +46,7 @@ const serverlessConfiguration: AWS = {
       IMAGES_S3_BUCKET: 'serverless-udagram-images-kelue-${self:provider.stage}',
       SIGNED_URL_EXPIRATION: '300',
       CONNECTIONS_TABLE: 'Connections-${self:provider.stage}',
-      THUMBNAILS_S3_BUCKET: 'serverless-udagram-images-tobenna-thumbnails-${self:provider.stage}',
+      THUMBNAILS_S3_BUCKET: 'serverless-udagram-images-kelue-thumbnails-${self:provider.stage}',
       //AUTH_0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
       //AUTH_0_SECRET_FIELD: 'auth0Secret',
     },
@@ -106,10 +106,18 @@ const serverlessConfiguration: AWS = {
         ],
         Resource: 'arn:aws:s3:::${self:provider.environment.THUMBNAILS_S3_BUCKET}/*'
       },
+      {
+        Effect: 'Allow',
+        Action: [
+          'es:*',
+          'es:ESHttpPost',
+        ],
+        Resource: { 'Fn::GetAtt': ['ImagesSearch', 'Arn'] }
+      }
     ]
   },
   // import the function via paths
-  functions: { groups, creategroup, getImages, getimage, createimage, sendNotifications, connect, disconnect, elasticSearchSync, resize },
+  functions: { groups, creategroup, getImages, getimage, createimage, sendNotifications, connect, disconnect,  elasticSearchSync, resize},
   resources:{
     Resources: {
       GatewayResponseDefault4xx: {
@@ -276,18 +284,20 @@ const serverlessConfiguration: AWS = {
             Statement:[{
               Effect: 'Allow',
               Principal: {
-                AWS: '*'
+                AWS: '*' 
               },
-              Action: 'es:*',
+              Action: [
+                'es:*'
+              ], 
               Resource: { 'Fn::Sub': 'arn:aws:es:${self:provider.region}:${AWS::AccountId}:domain/images-search-${self:provider.stage}/*' },
               Condition:{
-                IpAddress: { 'aws:SourceIp': ['129.205.113.11'] }
+                IpAddress: { 'aws:SourceIp': ['197.210.79.163'] }
               }
             }]
           }
         }
       },
-      ThumbnailsBucket: {// describes the thumbnail bucket to be created
+      ThumbnailsBucket: {
         Type: 'AWS::S3::Bucket',
         Properties: {
           BucketName: '${self:provider.environment.THUMBNAILS_S3_BUCKET}',
@@ -303,7 +313,7 @@ const serverlessConfiguration: AWS = {
           }
         }
       },
-      ThumbnailsBucketPolicy: { // policy for the thumbnail bbucket created
+      ThumbnailsBucketPolicy: {
         Type: 'AWS::S3::BucketPolicy',
         Properties: {
           PolicyDocument:{
