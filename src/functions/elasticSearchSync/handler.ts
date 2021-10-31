@@ -2,7 +2,7 @@ import 'source-map-support/register';
 
 import { middyfy } from '@libs/lambda';
 import { DynamoDBStreamEvent, DynamoDBStreamHandler } from 'aws-lambda';
-import * as AWS from 'aws-sdk';
+import * as AWS from 'aws-sdk'
 import * as elasticsearch from 'elasticsearch'
 import * as httpAwsEs from 'http-aws-es'
 
