@@ -1,4 +1,4 @@
-//import auth0Authorizer from '@functions/auth0Authorizer';
+import auth0Authorizer from '@functions/auth0Authorizer';
 import type { AWS } from '@serverless/typescript';
 
 
@@ -47,8 +47,8 @@ const serverlessConfiguration: AWS = {
       SIGNED_URL_EXPIRATION: '300',
       CONNECTIONS_TABLE: 'Connections-${self:provider.stage}',
       THUMBNAILS_S3_BUCKET: 'serverless-udagram-images-kelue-thumbnails-${self:provider.stage}',
-      //AUTH_0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
-      //AUTH_0_SECRET_FIELD: 'auth0Secret',
+      AUTH_0_SECRET_ID: 'Auth0Secret-${self:provider.stage}',
+      AUTH_0_SECRET_FIELD: 'auth0Secret',
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
@@ -113,11 +113,27 @@ const serverlessConfiguration: AWS = {
           'es:ESHttpPost',
         ],
         Resource: { 'Fn::GetAtt': ['ImagesSearch', 'Arn'] }
+      },
+      {
+        Effect: 'Allow',
+        Action: [
+          'secretsmanager:GetSecretValue'
+        ],
+        Resource: { Ref: 'Auth0Secret' }
+      },
+      {
+        Effect: 'Allow',
+        Action: [
+          'kms:Decrypt'
+        ],
+        Resource: [
+          {"Fn::GetAtt": [ 'KMSKey', 'Arn' ]}
+        ]
       }
     ]
   },
   // import the function via paths
-  functions: { groups, creategroup, getImages, getimage, createimage, sendNotifications, connect, disconnect,  elasticSearchSync, resize},
+  functions: { groups, creategroup, getImages, getimage, createimage, sendNotifications, connect, disconnect,  elasticSearchSync, resize, auth0Authorizer},
   resources:{
     Resources: {
       GatewayResponseDefault4xx: {
@@ -332,6 +348,42 @@ const serverlessConfiguration: AWS = {
           Bucket: '${self:provider.environment.THUMBNAILS_S3_BUCKET}'
         }
       },
+      KMSKey: {
+        Type: 'AWS::KMS::Key',
+        Properties: {
+          Description: "KMS Key to encrypt Auth0 certificate",
+          KeyPolicy:{
+            Id: "key-default-1",
+            Version: '2012-10-17',
+            Statement: [
+              {
+                Sid: 'Allow administration of the key',
+                Effect: 'Allow',
+                Principal: {
+                  AWS: { 'Fn::Join': [':', ['arn:aws:iam:', { Ref: 'AWS::AccountId' }, 'root']] }
+                },
+                Action: 'kms:*',
+                Resource: '*'
+              }
+            ]
+          }
+        }
+      },
+      KMSKeyAlias: {
+        Type: 'AWS::KMS::Alias',
+        Properties: {
+          AliasName: 'alias/auth0Key-${self:provider.stage}',
+          TargetKeyId: { Ref: 'KMSKey' }
+        }
+      },
+      Auth0Secret: {
+        Type: 'AWS::SecretsManager::Secret',
+        Properties: {
+          Name: '${self:provider.environment.AUTH_0_SECRET_ID}',
+          Description: "Auth0 secret",
+          KmsKeyId: { Ref: 'KMSKey' }
+        }
+      }
     }
   }
 };

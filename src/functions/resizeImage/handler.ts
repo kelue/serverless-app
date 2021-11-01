@@ -66,10 +66,7 @@ async function processImage(S3Event:S3Event){
       Body: convertedBuffer
     })
     .promise()
-
   }
-
-  
 }
 
 
